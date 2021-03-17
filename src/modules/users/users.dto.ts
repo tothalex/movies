@@ -1,5 +1,7 @@
 import { IsString, IsDefined, Length, IsIn } from 'class-validator'
 
+import { UserRole } from '~types/user'
+
 export class CreateUseDto {
   @IsDefined({ message: 'not-defined' })
   @IsString({ message: 'not-string' })
@@ -14,10 +16,11 @@ export class CreateUseDto {
   @IsDefined({ message: 'not-defined' })
   @IsString({ message: 'not-string' })
   @IsIn(['basic', 'premium'])
-  role: 'basic' | 'premium'
+  role: UserRole
 }
 
 export class UserDto {
   id: string
   username: string
+  role: UserRole
 }

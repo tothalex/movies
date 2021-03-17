@@ -21,11 +21,11 @@ export class UsersService {
       password: await argon2.hash(createUserDto.password),
       role: createUserDto.role,
     }).save()
-    return { id: createdUser.id, username: createdUser.username }
+    return { id: createdUser.id, username: createdUser.username, role: createdUser.role }
   }
 
   async findUserById(id: string): Promise<UserDto> {
     const user = await this.userModel.findOne({ id })
-    return { id: user.id, username: user.username }
+    return { id: user.id, username: user.username, role: user.role }
   }
 }

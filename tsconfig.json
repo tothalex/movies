@@ -10,13 +10,15 @@
     "sourceMap": true,
     "outDir": "./dist",
     "incremental": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "~modules/*": ["modules/*"],
-      "~types/*": ["types/*"],
-      "~pipes/*": ["pipes/*"],
-      "~utils/*": ["utils/*"],
-      "~guards/*": ["guards/*"]
+      "~modules/*": ["src/modules/*"],
+      "~pipes/*": ["src/pipes/*"],
+      "~utils/*": ["src/utils/*"],
+      "~guards/*": ["src/guards/*"],
+      "~types/*": ["src/types/*"],
+      "~services/*": ["src/services/*"],
+      "~test/*": ["test/*"]
     } 
   }
 }

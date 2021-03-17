@@ -8,11 +8,19 @@ import { AuthenticatedRequest } from '~types/request'
 import { UserMoviesGuard } from '~guards/user.movies-guard'
 import { Movies } from '~modules/movies/movies.schema'
 
+/**
+ * Movies Controller
+ */
 @Controller('movies')
 @UseGuards(JwtAuthGuard)
 export class MoviesController {
   constructor(private moviesService: MoviesService) {}
 
+  /**
+   * Create movie
+   * @param req Request with the authentication details
+   * @returns Returns created movie
+   */
   @UseGuards(UserMoviesGuard)
   @Post()
   async create(@Req() req: AuthenticatedRequest, @Body(new ValidationPipe()) createMovieDto: CreateMovieDto): Promise<MovieDto> {
@@ -24,10 +32,15 @@ export class MoviesController {
     }
   }
 
+  /**
+   * Get movies
+   * @param req Request with the authentication details
+   * @returns Returns movies created by the user
+   */
   @Get('/')
   async all(@Req() req: AuthenticatedRequest): Promise<Movies[]> {
     try {
-      const movies = await this.moviesService.getMovies(req.user.id)
+      const movies = await this.moviesService.getUserMovies(req.user.id)
       return movies
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST)

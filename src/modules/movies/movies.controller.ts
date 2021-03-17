@@ -1,0 +1,36 @@
+import { Controller, Get, Post, Body, UseGuards, Req, HttpException, HttpStatus } from '@nestjs/common'
+
+import { CreateMovieDto, MovieDto } from '~modules/movies/movies.dto'
+import { MoviesService } from '~modules/movies/movies.service'
+import { ValidationPipe } from '~pipes/validation.pipe'
+import { JwtAuthGuard } from '~guards/auth.jwt-guard'
+import { AuthenticatedRequest } from '~types/request'
+import { UserMoviesGuard } from '~guards/user.movies-guard'
+import { Movies } from '~modules/movies/movies.schema'
+
+@Controller('movies')
+@UseGuards(JwtAuthGuard)
+export class MoviesController {
+  constructor(private moviesService: MoviesService) {}
+
+  @UseGuards(UserMoviesGuard)
+  @Post()
+  async create(@Req() req: AuthenticatedRequest, @Body(new ValidationPipe()) createMovieDto: CreateMovieDto): Promise<MovieDto> {
+    try {
+      const movie = await this.moviesService.createMovie(req.user, createMovieDto.title)
+      return movie
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+    }
+  }
+
+  @Get('/')
+  async all(@Req() req: AuthenticatedRequest): Promise<Movies[]> {
+    try {
+      const movies = await this.moviesService.getMovies(req.user.id)
+      return movies
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+    }
+  }
+}

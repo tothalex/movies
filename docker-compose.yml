@@ -9,5 +9,23 @@ services:
     volumes:
       - mongodb_data_container:/data/db
 
+  app:
+    command: node dist/main.js
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - published: ${APP_PORT:-3000}
+        target: 3000
+    volumes:
+      - .:/app/
+    environment:
+      JWT_SECRET: 'secret'
+      MONGO: 'mongodb://mongo:27017'
+      OMGDB_API_KEY: '6ed03de0'
+    depends_on:
+      - mongo
+
 volumes:
   mongodb_data_container:
+

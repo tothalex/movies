@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "npx concurrently \"docker-compose up\" \"nest start --watch\"",
+    "start:dev": "npx concurrently \"docker-compose -f docker-compose-dev.yml up\" \"nest start --watch\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "documentation": "npx @compodoc/compodoc -p tsconfig.json -s",

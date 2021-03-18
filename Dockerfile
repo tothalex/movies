@@ -2,10 +2,9 @@ FROM node:14.15-alpine
 
 WORKDIR /app
 
-COPY ./package.json ./package-lock.json ./
+COPY . .
+
 RUN npm install
 RUN npm run build
 
-COPY ./dist .
-
-CMD ["node", "main.js"]
+CMD ["node", "./dist/main.js"]

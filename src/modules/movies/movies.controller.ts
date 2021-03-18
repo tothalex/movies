@@ -6,7 +6,7 @@ import { ValidationPipe } from '~pipes/validation.pipe'
 import { JwtAuthGuard } from '~guards/auth.jwt-guard'
 import { AuthenticatedRequest } from '~types/request'
 import { UserMoviesGuard } from '~guards/user.movies-guard'
-import { Movies } from '~modules/movies/movies.schema'
+import { Movie } from '~modules/movies/movies.schema'
 
 /**
  * Movies Controller
@@ -38,7 +38,7 @@ export class MoviesController {
    * @returns Returns movies created by the user
    */
   @Get('/')
-  async all(@Req() req: AuthenticatedRequest): Promise<Movies[]> {
+  async all(@Req() req: AuthenticatedRequest): Promise<Movie[]> {
     try {
       const movies = await this.moviesService.getUserMovies(req.user.id)
       return movies

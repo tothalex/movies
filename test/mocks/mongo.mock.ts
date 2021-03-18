@@ -9,7 +9,6 @@ export const rootMongooseTestModule = (options: MongooseModuleOptions = {}) =>
     useFactory: async () => {
       mongod = new MongoMemoryServer()
       const mongoUri = await mongod.getUri()
-      console.log('Memory MongoDB started')
       return {
         uri: mongoUri,
         ...options,
@@ -21,6 +20,5 @@ export const closeInMongodConnection = async () => {
   if (mongod) {
     await mongoose.disconnect()
     await mongod.stop()
-    console.log('Memory MongoDB stopped')
   }
 }

@@ -14,16 +14,13 @@ export class AuthService {
   async validateUser(authLoginDto: AuthLoginDto): Promise<boolean> {
     const user = await this.userModel.findOne({ username: authLoginDto.username })
     if (!user) {
-      throw new Error('username-not-found')
+      throw new Error('invalid-username')
     }
     return await argon2.verify(user.password, authLoginDto.password)
   }
 
   async signToken(username: string): Promise<string> {
     const user = await this.userModel.findOne({ username })
-    if (!user) {
-      throw new Error('username-not-found')
-    }
     return this.jwtService.sign({ id: user.id, username, role: user.role })
   }
 }

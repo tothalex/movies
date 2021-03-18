@@ -20,11 +20,11 @@ export class AuthController {
   async login(@Body(new ValidationPipe()) authLoginDto: AuthLoginDto): Promise<string> {
     try {
       if (!(await this.authService.validateUser(authLoginDto))) {
-        throw new BadRequestException('Invalid password')
+        throw new BadRequestException('invalid-password')
       }
+      return this.authService.signToken(authLoginDto.username)
     } catch (error) {
       throw new BadRequestException(error.message)
     }
-    return this.authService.signToken(authLoginDto.username)
   }
 }

@@ -4,7 +4,7 @@ import { Document, Types } from 'mongoose'
 import { User } from '~modules/users/users.schema'
 
 @Schema({ timestamps: true })
-export class Movies extends Document {
+export class Movie extends Document {
   @Prop({ ref: User.name, type: Types.ObjectId })
   user: Types.ObjectId
 
@@ -27,4 +27,4 @@ export class Movies extends Document {
   updatedAt: string
 }
 
-export const MoviesSchema = SchemaFactory.createForClass(Movies)
+export const MoviesSchema = SchemaFactory.createForClass(Movie)

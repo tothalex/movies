@@ -3,20 +3,20 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { startOfMonth, endOfMonth } from 'date-fns'
 
-import { Movies } from '~modules/movies/movies.schema'
+import { Movie } from '~modules/movies/movies.schema'
 import { AuthenticatedUser } from '~types/request'
 import { MovieDto } from '~modules/movies/movies.dto'
 import { OmdbService } from '~services/omdb.service'
 
 @Injectable()
 export class MoviesService {
-  constructor(@InjectModel(Movies.name) private moviesModel: Model<Movies>, private omdbService: OmdbService) {}
+  constructor(@InjectModel(Movie.name) private moviesModel: Model<Movie>, private omdbService: OmdbService) {}
 
-  async getUserMovies(user: string): Promise<Movies[]> {
+  async getUserMovies(user: string): Promise<Movie[]> {
     return this.moviesModel.find({ user }).exec()
   }
 
-  async getMoviesCreatedInCurrentMonth(user: string): Promise<Movies[]> {
+  async getMoviesCreatedInCurrentMonth(user: string): Promise<Movie[]> {
     return this.moviesModel.find({ user, createdAt: { $gte: startOfMonth(new Date()).toString(), $lte: endOfMonth(new Date()).toString() } }).exec()
   }
 
